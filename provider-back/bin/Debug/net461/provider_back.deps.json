@@ -24,7 +24,6 @@
     ".NETFramework,Version=v4.6.1": {
       "provider_back/1.0.0": {
         "dependencies": {
-          "AutoMapper": "10.1.1",
           "DotNetEnv": "2.1.1",
           "Microsoft.AspNetCore": "2.1.7",
           "Microsoft.AspNetCore.HttpsPolicy": "2.1.1",
@@ -790,11 +789,6 @@
       "System.Xml.XPath.XDocument.Reference/4.1.0.0": {
         "compile": {
           "System.Xml.XPath.XDocument.dll": {}
-        }
-      },
-      "AutoMapper/10.1.1": {
-        "compile": {
-          "lib/net461/AutoMapper.dll": {}
         }
       },
       "DotNetEnv/2.1.1": {
@@ -1989,7 +1983,6 @@
     ".NETFramework,Version=v4.6.1/win7-x86": {
       "provider_back/1.0.0": {
         "dependencies": {
-          "AutoMapper": "10.1.1",
           "DotNetEnv": "2.1.1",
           "Microsoft.AspNetCore": "2.1.7",
           "Microsoft.AspNetCore.HttpsPolicy": "2.1.1",
@@ -2125,11 +2118,6 @@
         },
         "runtime": {
           "provider_back.exe": {}
-        }
-      },
-      "AutoMapper/10.1.1": {
-        "runtime": {
-          "lib/net461/AutoMapper.dll": {}
         }
       },
       "DotNetEnv/2.1.1": {
@@ -3335,13 +3323,6 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
-    },
-    "AutoMapper/10.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-uMgbqOdu9ZG5cIOty0C85hzzayBH2i9BthnS5FlMqKtMSHDv4ts81a2jS1VFaDBVhlBeIqJ/kQKjQY95BZde9w==",
-      "path": "automapper/10.1.1",
-      "hashPath": "automapper.10.1.1.nupkg.sha512"
     },
     "DotNetEnv/2.1.1": {
       "type": "package",
