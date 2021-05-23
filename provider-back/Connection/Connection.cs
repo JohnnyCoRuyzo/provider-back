@@ -111,17 +111,18 @@ namespace provider_back.Connection
         {
             ProviderViewModel item = new ProviderViewModel
             {
-                P_ID = Convert.ToInt32(rdr["P_ID"]),
-                P_Name = Convert.ToString(rdr["P_Name"]),
-                P_Business_Name = Convert.ToString(rdr["P_Business_Name"]),
-                P_NIT = Convert.ToString(rdr["P_NIT"]),
-                P_Address = Convert.ToString(rdr["P_Address"]),
-                P_PhoneNumber = Convert.ToString(rdr["P_PhoneNumber"]),
-                P_Creation_Date = Convert.ToDateTime(rdr["P_Creation_Date"]),
-                P_Rating_Number = Convert.ToDecimal(rdr["P_Rating_Number"])
+                ProviderID = Convert.ToInt32(rdr["P_ID"]),
+                ProviderOrder = Convert.ToInt32(rdr["P_Order"]),
+                ProviderName = Convert.ToString(rdr["P_Name"]),
+                ProviderBusiness_Name = Convert.ToString(rdr["P_Business_Name"]),
+                ProviderNIT = Convert.ToString(rdr["P_NIT"]),
+                ProviderAddress = Convert.ToString(rdr["P_Address"]),
+                ProviderPhoneNumber = Convert.ToString(rdr["P_PhoneNumber"]),
+                ProviderCreation_Date = Convert.ToDateTime(rdr["P_Creation_Date"]),
+                ProviderRating_Number = Convert.ToDecimal(rdr["P_Rating_Number"])
             };
             bool parseSuccess = DateTime.TryParse(rdr["P_Modification_Date"].ToString(), out DateTime modificationDate);
-            item.P_Modification_Date = !parseSuccess ? (DateTime?)null : modificationDate;
+            item.ProviderModification_Date = !parseSuccess ? (DateTime?)null : modificationDate;
             return item;
 
         }
