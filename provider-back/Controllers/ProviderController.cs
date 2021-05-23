@@ -3,25 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static provider_back.Connection.Connection;
+using provider_back.Models;
 
 namespace provider_back.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ProviderController : ControllerBase
     {
-        // GET api/values
+        // GET api/provider
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<ProviderViewModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return SelectQuery("SELECT * FROM [dbo].[PI_Provider_Select]") ;
         }
 
-        // GET api/values/5
+        // GET api/provider/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<ProviderViewModel> Get(int id)
         {
-            return "value";
+            return SelectQuery("SELECT * FROM [dbo].[PI_Provider_Select]");
         }
 
         // POST api/values
