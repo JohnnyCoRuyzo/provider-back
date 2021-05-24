@@ -25,7 +25,17 @@ namespace provider_back
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin()
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod();
+                      });
+            });
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +50,13 @@ namespace provider_back
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
+            app.UseHttpsRedirection();
         }
     }
 }

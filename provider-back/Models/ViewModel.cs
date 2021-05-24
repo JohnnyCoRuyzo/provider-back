@@ -10,12 +10,12 @@ namespace provider_back.Models
         public int ProviderID { get; set; }
         public int ProviderOrder { get; set; }
         public string ProviderName { get; set; }
-        public string ProviderBusiness_Name { get; set; }
+        public string ProviderBusinessName { get; set; }
         public string ProviderNIT { get; set; }
         public string ProviderAddress { get; set; }
         public string ProviderPhoneNumber { get; set; }
-        public DateTime ProviderCreation_Date { get; set; }
-        public DateTime? ProviderModification_Date { get; set; }
-        public decimal ProviderRating_Number { get; set; }
+        public DateTime ProviderCreationDate { get; set; }
+        public DateTime? ProviderLastModificationDate { get; set; }
+        public string ProviderRatingNumber { get; set; }
     }
 }

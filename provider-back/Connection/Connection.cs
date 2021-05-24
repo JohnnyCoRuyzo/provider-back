@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using AutoMapper;
 using provider_back.Models;
 using static provider_back.Utilities;
 
@@ -24,11 +21,21 @@ namespace provider_back.Connection
             {
                 conn = new SqlConnection(GetDBConnectionString());
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(sqlProcedureToExecute(action), conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand(SqlProcedureToExecute(action), conn);
+                cmd.CommandType = CommandType.Text;
                 cmd = cmd.AddParameters(viewModel, action);
                 rdr = cmd.ExecuteReader();
-                return Convert.ToInt32(rdr["ID"]);
+                int id = 0;
+                while (rdr.Read())
+                {
+                    if(action != EnumAction.Insert) {
+                        id = 0;
+                    }
+                    else { 
+                    id = Convert.ToInt32(rdr["ID"]??0);
+                    }
+                }
+                return id;
             }
             finally
             {
@@ -43,7 +50,7 @@ namespace provider_back.Connection
             }
         }
 
-        public static string sqlProcedureToExecute(EnumAction action)
+        public static string SqlProcedureToExecute(EnumAction action)
         {
             switch (action)
             {
@@ -62,15 +69,15 @@ namespace provider_back.Connection
         {
             if (action == EnumAction.Insert || action == EnumAction.Update) { 
             cmd.Parameters.Add("@Name", SqlDbType.VarChar).Value = viewModel.ProviderName;
-            cmd.Parameters.Add("@Business_Name", SqlDbType.VarChar).Value = viewModel.ProviderBusiness_Name;
+            cmd.Parameters.Add("@Business_Name", SqlDbType.VarChar).Value = viewModel.ProviderBusinessName;
             cmd.Parameters.Add("@NIT", SqlDbType.VarChar).Value = viewModel.ProviderNIT;
             cmd.Parameters.Add("@Address", SqlDbType.VarChar).Value = viewModel.ProviderAddress;
             cmd.Parameters.Add("@PhoneNumber", SqlDbType.VarChar).Value = viewModel.ProviderPhoneNumber;
-            cmd.Parameters.Add("@Rating_Number", SqlDbType.VarChar).Value = viewModel.ProviderRating_Number;
+            cmd.Parameters.Add("@Rating_Number", SqlDbType.VarChar).Value = viewModel.ProviderRatingNumber;
             }
             if(action == EnumAction.Update || action == EnumAction.Delete)
             {
-                cmd.Parameters.Add("@Id", SqlDbType.VarChar).Value = viewModel.ProviderID;
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = viewModel.ProviderID;
             }
             return cmd;
         }
@@ -114,15 +121,15 @@ namespace provider_back.Connection
                 ProviderID = Convert.ToInt32(rdr["P_ID"]),
                 ProviderOrder = Convert.ToInt32(rdr["P_Order"]),
                 ProviderName = Convert.ToString(rdr["P_Name"]),
-                ProviderBusiness_Name = Convert.ToString(rdr["P_Business_Name"]),
+                ProviderBusinessName = Convert.ToString(rdr["P_Business_Name"]),
                 ProviderNIT = Convert.ToString(rdr["P_NIT"]),
                 ProviderAddress = Convert.ToString(rdr["P_Address"]),
                 ProviderPhoneNumber = Convert.ToString(rdr["P_PhoneNumber"]),
-                ProviderCreation_Date = Convert.ToDateTime(rdr["P_Creation_Date"]),
-                ProviderRating_Number = Convert.ToDecimal(rdr["P_Rating_Number"])
+                ProviderCreationDate = Convert.ToDateTime(rdr["P_Creation_Date"]),
+                ProviderRatingNumber = Decimal.Round(Convert.ToDecimal(rdr["P_Rating_Number"]),1).ToString()
             };
             bool parseSuccess = DateTime.TryParse(rdr["P_Modification_Date"].ToString(), out DateTime modificationDate);
-            item.ProviderModification_Date = !parseSuccess ? (DateTime?)null : modificationDate;
+            item.ProviderLastModificationDate = !parseSuccess ? (DateTime?)null : modificationDate;
             return item;
 
         }
